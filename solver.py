@@ -1,7 +1,5 @@
 import copy
-from turtledemo.sorting_animate import start_ssort
 
-from setuptools.command.rotate import rotate
 
 FACE_LEFT = 0
 FACE_RIGHT = 1
@@ -93,7 +91,17 @@ def get_solved_state():
 
 
 def rotate_clockwise(faces, vertex, type, regular=True):
+    # if regular is set to true, a regular rotation on the passed in 'vertex' is performed. Define regular rotations as follows:
+    # if vertex == "top", rotates top counterclockwise
+    # if vertex == "front", rotates front counterclockwise
+    # if vertex == "left", rotates left towards the person
+    # if vertex == "right", rotates right towards the person
+
+    # if regular is set to false, the opposite rotations for the passed in 'vertex' are performed
+
+    # if type is 1, a corner rotation is performed. else, if type is set to 2, a centre rotation is performed
     faces = copy.deepcopy(faces)
+    # corner rotation
     if type == 1:
         if vertex == "top":
             # rotate left or clockwise
@@ -120,12 +128,12 @@ def rotate_clockwise(faces, vertex, type, regular=True):
             faces[FACE_BOTTOM][0] = faces[FACE_RIGHT][4]
             faces[FACE_RIGHT][4] = temp
         if not regular:
-            # one more rotation if not regular
+            # one more "regular" rotation if not regular
             faces = rotate_clockwise(faces, vertex, type)
 
         return faces
 
-    # type 2
+    # type 2, centre rotations
     if vertex == "top":
         # rotate_clockwise
         faces = rotate_clockwise(faces, "top", 1)
@@ -192,7 +200,7 @@ def rotate_clockwise(faces, vertex, type, regular=True):
         faces[FACE_BOTTOM][2] = temp2
         faces[FACE_BOTTOM][1] = temp3
 
-    # if not regular, rotate again
+    # if the rotation is not regular, rotate again
     if not regular:
         faces = rotate_clockwise(faces, vertex, type)
 
@@ -200,6 +208,7 @@ def rotate_clockwise(faces, vertex, type, regular=True):
 
 
 def is_solved(faces):
+    # check if the pyraminx is solved
     for face in faces:
         for i in range(1, len(face)):
             if face[i] != face[i-1]:
@@ -209,6 +218,7 @@ def is_solved(faces):
 
 
 def encoded_state(state):
+    # given a pyraminx state, encode it as a string
     encoded_state = ''
     for row in state:
         for color in row:
@@ -227,7 +237,7 @@ def main(start_state=None):
     actions = []
     vertices = ["top", "front", "left", "right"]
 
-    # assume tips are aligned
+    # assume correct corner rotations are performed and corners are aligned
     for vertex in vertices:
         actions.append([vertex, 2, True])
 
