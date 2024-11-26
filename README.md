@@ -9,7 +9,7 @@ Run solver.py, eg  usage: `python solver.py`
 This program assumes you have the corner pieces aligned to their center colors. For more information, check out my blog post (URL will be added soon :)).
 
 
-**Inputting the pyraminx:**
+**Entering a shuffled pyraminx's state:**
 
 The program asks for the state of the Pyraminx. To input this, first put the Pyraminx on a flat surface and have a vertex pointing at you. Then, identify the bottom face and mark the center color on the bottom face right below the front vertex. We shall use this center color as our point of reference to input the state of the pyraminx.
 
